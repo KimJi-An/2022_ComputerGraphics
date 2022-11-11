@@ -5,10 +5,12 @@ import math
 
 def my_padding(src, filter):
     (h, w) = src.shape
+    
     if isinstance(filter, tuple):
         (h_pad, w_pad) = filter
     else:
         (h_pad, w_pad) = filter.shape
+        
     h_pad = h_pad // 2
     w_pad = w_pad // 2
     padding_img = np.zeros((h + h_pad * 2, w + w_pad * 2))
@@ -43,6 +45,7 @@ def my_filtering(src, filter):
 def get_my_sobel():
     sobel_x = np.dot(np.array([[1], [2], [1]]), np.array([[-1, 0, 1]]))
     sobel_y = np.dot(np.array([[-1], [0], [1]]), np.array([[1, 2, 1]]))
+    
     return sobel_x, sobel_y
 
 
@@ -51,7 +54,9 @@ def calc_derivatives(src):
     sobel_x, sobel_y = get_my_sobel()
     Ix = my_filtering(src, sobel_x)
     Iy = my_filtering(src, sobel_y)
+    
     return Ix, Iy
+
 
 def show_patch_hist(patch_vector):
     index = np.arange(len(patch_vector))
@@ -101,7 +106,6 @@ def main():
     print(np.argmax(vector)*angle_range)
 
     show_patch_hist(vector)
-
 
 if __name__ == '__main__':
     main()
